@@ -11,3 +11,9 @@ export const TIME_TRAVEL_DIRECTIONS = {
 }
 
 export const DATE_FORMAT_OPTIONS = { year: 'numeric', month: 'short', day: 'numeric' };
+
+export const TIME_FRAMES = {
+  PRIOR: 'PRIOR',
+  CURRENT: 'CURRENT',
+  LATER: 'LATER'
+}

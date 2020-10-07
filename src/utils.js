@@ -1,6 +1,6 @@
 import getDaysInMonth from "date-fns/getDaysInMonth";
 import getDay from "date-fns/getDay";
-import {DATE_FORMAT_OPTIONS} from "./constants";
+import {DATE_FORMAT_OPTIONS, TIME_FRAMES} from "./constants";
 
 export const generateCalendar = ({month, year}) => {
   // how many days are there in a month
@@ -19,10 +19,10 @@ export const generateCalendar = ({month, year}) => {
   for (let i = 0; i < days.length; i++) {
     if (i >= startingDay) {
       if (j <= numberOfDaysInMonth) {
-        days[i] = {day: j, current: true}
+        days[i] = {day: j, period: TIME_FRAMES.CURRENT}
         j++
       } else {
-        days[i] = {day: k}
+        days[i] = {day: k, period: TIME_FRAMES.LATER}
         k++
       }
     } else {
@@ -34,7 +34,7 @@ export const generateCalendar = ({month, year}) => {
   const complement = [...Array(numberOfDaysInPrevMonth + 1).keys()].splice(-l)
 
   for (let i = 0; i < l; i++) {
-    days[i] = {day: complement[i]}
+    days[i] = {day: complement[i], period: TIME_FRAMES.PRIOR}
   }
 
   return days

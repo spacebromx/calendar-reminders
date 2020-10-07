@@ -6,7 +6,7 @@ import Navigation from "./Navigation";
 import Day from "./Day";
 import Modal from "./Modal";
 import Overlay from "./Overlay";
-import {actions} from "../constants";
+import {actions, TIME_FRAMES} from "../constants";
 
 const Calendar = () => {
   const {state: {month, year}, dispatch} = useContext(GlobalContext)
@@ -32,12 +32,12 @@ const Calendar = () => {
         <Header/>
 
         <div className="flex flex-wrap border-t border-l">
-          {days.map(({day, current}, i) => (
+          {days.map(({day, period}, i) => (
             <Day
               key={`${day}-${i}`}
               number={day}
               highlight={i % 7 === 0 || (i % 7) === 6}
-              current={current}
+              current={period === TIME_FRAMES.CURRENT}
               today={isToday({year, month, day})}
               onClick={() => {
                 dispatch({
