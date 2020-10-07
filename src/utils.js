@@ -19,10 +19,12 @@ export const generateCalendar = ({month, year}) => {
   for (let i = 0; i < days.length; i++) {
     if (i >= startingDay) {
       if (j <= numberOfDaysInMonth) {
-        days[i] = {day: j, period: TIME_FRAMES.CURRENT}
+        // current month
+        days[i] = formatDate(new Date(year, month, j))
         j++
       } else {
-        days[i] = {day: k, period: TIME_FRAMES.LATER}
+        // next month
+        days[i] = formatDate(new Date(year, month + 1, k))
         k++
       }
     } else {
@@ -34,9 +36,10 @@ export const generateCalendar = ({month, year}) => {
   const complement = [...Array(numberOfDaysInPrevMonth + 1).keys()].splice(-l)
 
   for (let i = 0; i < l; i++) {
-    days[i] = {day: complement[i], period: TIME_FRAMES.PRIOR}
+    days[i] = formatDate(new Date(year, month - 1, complement[i]))
   }
 
+  console.log(days)
   return days
 }
 
@@ -54,6 +57,8 @@ export const getStringDate = ({year, month, day}) => {
 
   return now.toLocaleString('en', DATE_FORMAT_OPTIONS)
 }
+
+export const formatDate = date => date.toLocaleString('en')
 
 export const parseAndFormatDate = date => {
   try {
