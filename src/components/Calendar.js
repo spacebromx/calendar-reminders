@@ -1,13 +1,17 @@
-import React, {useContext} from 'react';
+import React, {useContext, useState} from 'react';
 import {GlobalContext} from "../Store";
 import {generateCalendar} from "../utils";
 import Header from "./Header";
 import Navigation from "./Navigation";
 import Day from "./Day";
+import Modal from "./Modal";
+import Overlay from "./Overlay";
+import {actions} from "../constants";
 
 const Calendar = () => {
-  const {state: {month, year}} = useContext(GlobalContext)
+  const {state: {month, year}, dispatch} = useContext(GlobalContext)
   const days = generateCalendar({month, year})
+  const [showModal, setShowModal] = useState(false)
 
   function isToday({year, month, day}) {
     const newDate = new Date()
@@ -20,13 +24,33 @@ const Calendar = () => {
 
   return (
     <>
+      {showModal && <Overlay>
+        <Modal onClose={() => setShowModal(false)} />
+      </Overlay>}
       <Navigation/>
       <div className="-mx-1 -mb-1">
         <Header/>
 
         <div className="flex flex-wrap border-t border-l">
           {days.map(({day, current}, i) => (
-            <Day key={`${day}-${i}`} number={day} highlight={i % 7 === 0 || (i % 7) === 6} current={current} today={isToday({year, month, day})} />
+            <Day
+              key={`${day}-${i}`}
+              number={day}
+              highlight={i % 7 === 0 || (i % 7) === 6}
+              current={current}
+              today={isToday({year, month, day})}
+              onClick={() => {
+                dispatch({
+                  type: actions.CREATE_REMINDER,
+                  payload: {
+                    newDay: day,
+                    newMonth: month,
+                    newYear: year
+                  }
+                })
+                setShowModal(true)
+              }}
+            />
           ))}
         </div>
       </div>

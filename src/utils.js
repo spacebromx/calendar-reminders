@@ -1,5 +1,6 @@
 import getDaysInMonth from "date-fns/getDaysInMonth";
 import getDay from "date-fns/getDay";
+import {DATE_FORMAT_OPTIONS} from "./constants";
 
 export const generateCalendar = ({month, year}) => {
   // how many days are there in a month
@@ -45,5 +46,20 @@ export const getMonthName = ({month, year}) => {
     return formatter.format(new Date(year, month))
   } catch (e) {
     console.error(e)
+  }
+}
+
+export const getStringDate = ({year, month, day}) => {
+  const now = new Date(year, month, day)
+
+  return now.toLocaleString('en', DATE_FORMAT_OPTIONS)
+}
+
+export const parseAndFormatDate = date => {
+  try {
+    const dateParsed = Date.parse(date)
+    return new Date(dateParsed).toLocaleString('en', DATE_FORMAT_OPTIONS)
+  } catch (e) {
+    throw new Error('invalid date format')
   }
 }
