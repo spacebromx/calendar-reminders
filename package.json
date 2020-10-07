@@ -9,6 +9,7 @@
     "autoprefixer": "9.8.6",
     "classnames": "2.2.6",
     "date-fns": "2.16.1",
+    "formik": "2.1.7",
     "node-sass": "4.14.1",
     "postcss-cli": "8.0.0",
     "prop-types": "15.7.2",
@@ -16,7 +17,8 @@
     "react-color": "2.18.1",
     "react-dom": "^16.13.1",
     "react-scripts": "3.4.3",
-    "tailwindcss": "1.8.11"
+    "tailwindcss": "1.8.11",
+    "yup": "0.29.3"
   },
   "scripts": {
     "start": "npm run build:css && react-scripts start",
