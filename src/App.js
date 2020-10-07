@@ -1,11 +1,11 @@
 import React from 'react';
 import {generateCalendar} from "./utils";
 
-import './App.css';
+import './styles/main.css'
 
 function App() {
   return (
-    <div className="App">
+    <div className="container mx-auto">
       hello world
     </div>
   );
