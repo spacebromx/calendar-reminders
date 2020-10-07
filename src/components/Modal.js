@@ -49,7 +49,8 @@ const Modal = ({onClose}) => {
                             Create a Reminder
                           </h2>
                         </div>
-                        <div>
+                        <div className="inline-flex flex-col items-center">
+                          <span className="text-center ml-1 text-xs text-gray-600 font-normal italic">Pick Color</span>
                           <button
                             onClick={() => setShowColorPicker(true)}
                             className="rounded-b"
