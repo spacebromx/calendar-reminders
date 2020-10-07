@@ -43,7 +43,7 @@ const Navigation = () => {
         <span className="text-lg font-bold text-gray-800">{currentMonth}</span>
         <span className="ml-1 text-lg text-gray-600 font-normal">{year}</span>
       </div>
-      <div className="border rounded-lg px-1">
+      <div className="border rounded-lg inline-flex">
         <button
           type="button"
           className="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center"
@@ -56,9 +56,10 @@ const Navigation = () => {
           </svg>
         </button>
         <button
+          className="transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-1 items-center text-xs"
           onClick={e => handleMonthClick(e, TIME_TRAVEL_DIRECTIONS.CENTER)}
-          style={{position: 'relative', top: '-2px'}}
-          className="leading-none rounded-lg transition ease-in-out duration-100 inline-flex cursor-pointer hover:bg-gray-200 p-3 items-center">Today
+        >
+          Today
         </button>
         <button
           type="button"
