@@ -7,7 +7,7 @@ const Day = ({number, highlight, current}) => {
     <div style={{width: "14.28%", height: "120px"}}
          className={cx('day px-4 pt-2 border-r border-b relative overflow-y-scroll', {'bg-gray-200': highlight})}>
       <div
-        className={cx('inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100 text-gray-400 hover:bg-blue-200 font-bold', {'text-blue-600': highlight}, {'text-gray-700': current})}>{number}
+        className={cx('inline-flex w-6 h-6 items-center justify-center cursor-pointer text-center leading-none rounded-full transition ease-in-out duration-100 text-gray-400 hover:bg-blue-200 font-bold', {'text-gray-700': current}, {'text-blue-600': current && highlight} )}>{number}
       </div>
       <div style={{height: "80px"}} className="overflow-y-auto mt-1">
         {/*<div className="px-2 py-1 rounded-lg mt-1 overflow-hidden border" />*/}
@@ -15,8 +15,6 @@ const Day = ({number, highlight, current}) => {
     </div>
   );
 };
-
-// text-gray-400
 
 Day.propTypes = {
   number: PropTypes.number.isRequired,

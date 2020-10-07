@@ -1,11 +1,13 @@
-import React from 'react';
+import React, {useContext} from 'react';
+import {GlobalContext} from "../Store";
 import {generateCalendar} from "../utils";
 import Header from "./Header";
 import Navigation from "./Navigation";
 import Day from "./Day";
 
 const Calendar = () => {
-  const days = generateCalendar({month: 2, year: 2020})
+  const {state: {month, year}} = useContext(GlobalContext)
+  const days = generateCalendar({month, year})
 
   return (
     <>
@@ -14,9 +16,9 @@ const Calendar = () => {
         <Header/>
 
         <div className="flex flex-wrap border-t border-l">
-        {days.map(({day, current}, i) => (
-          <Day key={`${day}-${i}`} number={day} highlight={i % 7 === 0 || (i % 7)  === 6} current={current} />
-        ))}
+          {days.map(({day, current}, i) => (
+            <Day key={`${day}-${i}`} number={day} highlight={i % 7 === 0 || (i % 7) === 6} current={current}/>
+          ))}
         </div>
       </div>
     </>

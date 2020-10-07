@@ -1,14 +1,17 @@
 import React from 'react';
 import Layout from "./components/Layout";
 import Calendar from "./components/Calendar";
+import {ContextProvider} from "./Store";
 
 import './styles/main.css'
 
 function App() {
   return (
-    <Layout>
-      <Calendar />
-    </Layout>
+    <ContextProvider>
+      <Layout>
+        <Calendar/>
+      </Layout>
+    </ContextProvider>
   );
 }
 
