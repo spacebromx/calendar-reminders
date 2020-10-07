@@ -10,7 +10,7 @@ export const generateCalendar = ({month, year}) => {
 
   // what day of the week is the first day of the month (0 - 6)
   const startingDay = getDay(new Date(year, month , 1))
-  let days = Array(35).fill(0)
+  let days = Array(35).fill({})
 
   let j = 1
   let k = 1
@@ -18,10 +18,10 @@ export const generateCalendar = ({month, year}) => {
   for(let i = 0; i < days.length; i++) {
     if(i >= startingDay) {
       if (j <= numberOfDaysInMonth ) {
-        days[i] = j
+        days[i] = {day: j, current: true}
         j++
       } else {
-        days[i] = k
+        days[i] = {day: k}
         k++
       }
     } else {
@@ -33,7 +33,7 @@ export const generateCalendar = ({month, year}) => {
   const complement = [...Array(numberOfDaysInPrevMonth + 1).keys()].splice(-l)
 
   for(let i = 0; i < l; i++) {
-    days[i] = complement[i]
+    days[i] = {day: complement[i]}
   }
 
   return days
