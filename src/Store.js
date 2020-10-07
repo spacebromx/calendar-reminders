@@ -4,7 +4,7 @@ import {actions} from "./constants";
 const now = new Date()
 
 const initialState = {
-  day: now.getDay(),
+  day: now.getDate(),
   month: now.getMonth(),
   year: now.getFullYear()
 }
