@@ -4,7 +4,7 @@
   "private": true,
   "dependencies": {
     "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
+    "@testing-library/react": "11.0.4",
     "@testing-library/user-event": "^7.1.2",
     "autoprefixer": "9.8.6",
     "classnames": "2.2.6",
@@ -27,7 +27,7 @@
     "build:css": "postcss src/tailwind.css -o src/styles/main.css",
     "format": "prettier --write src/**/*.js",
     "lint": "eslint src/**/*.js",
-    "test": "react-scripts test",
+    "test": "react-scripts test --env=jest-environment-jsdom-sixteen",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -48,6 +48,7 @@
   "devDependencies": {
     "eslint-config-prettier": "6.12.0",
     "eslint-plugin-prettier": "3.1.4",
+    "jest-environment-jsdom-sixteen": "1.0.3",
     "prettier": "2.1.2"
   }
 }
