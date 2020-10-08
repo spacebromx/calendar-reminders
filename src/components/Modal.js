@@ -6,7 +6,7 @@ import { Formik, Form } from "formik";
 import { parseAndFormatDate } from "../utils";
 import ValidatedField from "./ValidatedField";
 import ReminderSchema from "../ReminderSchema";
-import { actions } from "../constants";
+import { actions, API_URL } from "../constants";
 
 const Modal = ({ onClose }) => {
   const [showColorPicker, setShowColorPicker] = useState(false);
@@ -24,6 +24,36 @@ const Modal = ({ onClose }) => {
     time: "1:00 PM",
     city: "",
     color: "#e53e3e",
+  };
+  const [showForecast, setShowForecast] = useState(false);
+  const [forecastData, setForecastData] = useState({});
+
+  const fetchForecast = async (cityName) => {
+    try {
+      const response = await fetch(
+        `${API_URL}?q=${cityName
+          .replace("", "+")
+          .toLowerCase()}&APPID=b312442a73a4c62ba990566c860678d9&units=metric`
+      );
+      if (!response.ok) {
+        setForecastData({
+          temp: "N/A",
+          image: "http://openweathermap.org/img/wn/03n.png",
+        });
+        return;
+      }
+
+      const data = await response.json();
+
+      setForecastData({
+        image: `http://openweathermap.org/img/wn/${data.weather[0].icon}.png`,
+        description: data.weather[0].description,
+        temp: `${Math.round(data.main.temp)} °C`,
+        feelsLike: `${Math.round(data.main.feels_like)} °C`,
+      });
+    } catch (e) {
+      console.log(e);
+    }
   };
 
   return (
@@ -136,6 +166,36 @@ const Modal = ({ onClose }) => {
                             placeholder="Enter city here"
                           />
                         </div>
+                        {isEdit && (
+                          <div className="flex px-2 py-2">
+                            {!showForecast && (
+                              <button
+                                disabled={values.city.trim().length < 3}
+                                onClick={async (e) => {
+                                  e.preventDefault();
+                                  await fetchForecast(values.city);
+                                  setShowForecast(true);
+                                }}
+                                className="bg-transparent hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded text-xs"
+                              >
+                                Get forecast data
+                              </button>
+                            )}
+                            {showForecast && (
+                              <>
+                                <div className="text-3xl font-bold text-gray-900">
+                                  {forecastData.temp}
+                                </div>
+                                <div>
+                                  <img
+                                    src={forecastData.image}
+                                    alt="forecast"
+                                  />
+                                </div>
+                              </>
+                            )}
+                          </div>
+                        )}
                       </div>
                     </div>
                   </div>
