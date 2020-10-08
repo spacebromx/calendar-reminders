@@ -1,6 +1,6 @@
 import React, {useContext, useState} from 'react';
 import {GlobalContext} from "../Store";
-import {generateCalendar, parseAndFormatDate} from "../utils";
+import {generateCalendar, getRemindersByDate, parseAndFormatDate} from "../utils";
 import Header from "./Header";
 import Navigation from "./Navigation";
 import Day from "./Day";
@@ -20,8 +20,8 @@ const Calendar = () => {
     let newDate = new Date(Date.parse(date))
 
     // set time to zero since it's not relevant for the comparison
-    today.setHours(0,0,0,0)
-    newDate.setHours(0,0,0,0)
+    today.setHours(0, 0, 0, 0)
+    newDate.setHours(0, 0, 0, 0)
 
     today = parseAndFormatDate(today)
     newDate = parseAndFormatDate(newDate)
@@ -32,7 +32,7 @@ const Calendar = () => {
   return (
     <>
       {showModal && <Overlay>
-        <Modal onClose={() => setShowModal(false)} />
+        <Modal onClose={() => setShowModal(false)}/>
       </Overlay>}
       <Navigation/>
       <div className="-mx-1 -mb-1">
@@ -46,6 +46,7 @@ const Calendar = () => {
               highlight={i % 7 === 0 || (i % 7) === 6}
               current={period === TIME_FRAMES.CURRENT}
               today={isToday(date)}
+              reminders={getRemindersByDate(reminders, date)}
               onClick={() => {
                 dispatch({
                   type: actions.CREATE_REMINDER,

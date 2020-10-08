@@ -15,7 +15,42 @@ const initialState = {
       city: "",
       color: "#e53e3e",
       date: "Oct 7, 2020",
-      description: "1",
+      description: "This is an example reminder",
+      time: "1:00 PM"
+    },
+    {
+      city: "",
+      color: "#cdcdcd",
+      date: "Oct 7, 2020",
+      description: "This is another example reminder",
+      time: "4:00 PM"
+    },
+    {
+      city: "",
+      color: "#1d1d1d",
+      date: "Oct 7, 2020",
+      description: "This is yet another example reminder",
+      time: "3:00 PM"
+    },
+    {
+      city: "",
+      color: "#e53e3e",
+      date: "Oct 7, 2020",
+      description: "This is an example reminder",
+      time: "1:00 PM"
+    },
+    {
+      city: "",
+      color: "#cdcdcd",
+      date: "Oct 7, 2020",
+      description: "This is another example reminder",
+      time: "1:00 PM"
+    },
+    {
+      city: "",
+      color: "#1d1d1d",
+      date: "Oct 7, 2020",
+      description: "This is yet another example reminder",
       time: "1:00 PM"
     }
   ]

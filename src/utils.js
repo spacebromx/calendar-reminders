@@ -74,3 +74,8 @@ export const parseAndFormatDate = (date, options = DATE_FORMAT_OPTIONS) => {
     throw new Error('invalid date format')
   }
 }
+
+export const getRemindersByDate = (reminders, date) => {
+  let newDate = parseAndFormatDate(date)
+  return reminders.filter(reminder => reminder.date === newDate)
+}
