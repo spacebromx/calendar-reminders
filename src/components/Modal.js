@@ -114,13 +114,14 @@ const Modal = ({onClose}) => {
                     </div>
                   </div>
                 </div>
-                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse">
+                <div className="bg-gray-50 px-4 py-3 sm:px-6 sm:flex sm:flex-row-reverse relative">
 <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
 <button type="submit"
         className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
 {isEdit ? "Edit" : "Create"}
 </button>
-</span><span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
+</span>
+                  <span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
 <button
   onClick={() => {
     isEdit && dispatch({
@@ -132,6 +133,20 @@ const Modal = ({onClose}) => {
   className="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
 Cancel
 </button>
+</span>
+                  <span className="absolute left-0 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto float-left">
+                    {isEdit && <button
+  onClick={() => {
+    dispatch({
+      type: actions.DELETE_REMINDER,
+      payload: values.id
+    })
+    onClose()
+  }}
+  type="button"
+  className="ml-8 text-left bg-red-500 hover:bg-red-400 text-white inline-flex justify-center w-full rounded-md border px-4 py-2 leading-6 font-medium shadow-sm focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
+Delete
+</button>}
 </span>
                 </div>
               </div>

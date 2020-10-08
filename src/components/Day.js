@@ -4,7 +4,7 @@ import cx from 'classnames'
 import {GlobalContext} from "../Store";
 import {actions} from "../constants";
 
-const Day = ({number, highlight, current, today, reminders, showModal, onClick }) => {
+const Day = ({number, highlight, current, today, reminders, date, showModal, onClick }) => {
   const {dispatch} = useContext(GlobalContext)
   return (
     <div style={{width: "14.28%", height: "120px"}}
@@ -15,6 +15,21 @@ const Day = ({number, highlight, current, today, reminders, showModal, onClick }
       >
         {number}
       </button>
+      <div className="float-right">
+        {reminders.length > 0 && <button onClick={() => {
+          dispatch({
+            type: actions.DELETE_ALL_REMINDERS,
+            payload: date
+          })
+        }}
+          className="inline-flex opacity-25">
+          <svg className="w-4 h-4" fill="#cbd5e0" stroke="currentColor" viewBox="0 0 24 24"
+               xmlns="http://www.w3.org/2000/svg">
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2"
+                  d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16"/>
+          </svg>
+        </button>}
+      </div>
       <div style={{height: "80px"}} className="overflow-y-auto mt-1">
         {reminders?.map(reminder => (
           <div className="mt-1 overflow-hidden, inline-flex items-center" key={reminder.id}>
@@ -44,6 +59,7 @@ Day.propTypes = {
   current: PropTypes.bool,
   today: PropTypes.bool,
   reminders: PropTypes.array,
+  date: PropTypes.string,
   showModal: PropTypes.func,
   onClick: PropTypes.func,
 }

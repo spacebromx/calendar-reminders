@@ -41,6 +41,7 @@ const Calendar = () => {
           {days.map(({date, period}, i) => (
             <Day
               key={date}
+              date={date}
               number={parseAndFormatDate(date, {day: 'numeric'})}
               highlight={i % 7 === 0 || (i % 7) === 6}
               current={period === TIME_FRAMES.CURRENT}

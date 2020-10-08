@@ -1,7 +1,7 @@
 import React, {useReducer, createContext} from 'react'
 import uniqid from 'uniqid'
 import {actions} from "./constants";
-import {getReminderById} from "./utils";
+import {getReminderById, parseAndFormatDate} from "./utils";
 
 const now = new Date()
 
@@ -87,6 +87,13 @@ const reducer = (state, action) => {
       return {...state, reminders: newReminders}
     case actions.CLEAN_CURRENT_REMINDER:
       return {...state, currentReminder: null}
+    case actions.DELETE_ALL_REMINDERS:
+      const newDate = parseAndFormatDate(action.payload)
+      const filteredItems = [...state.reminders].filter(item => item.date !== newDate)
+      return {...state, reminders: filteredItems}
+    case actions.DELETE_REMINDER:
+      let preservedReminders = [...state.reminders].filter(item => item.id !== action.payload)
+      return {...state, reminders: preservedReminders}
     default:
       return state
   }
