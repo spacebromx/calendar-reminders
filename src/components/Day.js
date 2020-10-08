@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useContext} from 'react';
 import PropTypes from 'prop-types'
 import cx from 'classnames'
+import {GlobalContext} from "../Store";
+import {actions} from "../constants";
 
-const Day = ({number, highlight, current, today, reminders, onClick }) => {
+const Day = ({number, highlight, current, today, reminders, showModal, onClick }) => {
+  const {dispatch} = useContext(GlobalContext)
   return (
     <div style={{width: "14.28%", height: "120px"}}
          className={cx('day px-4 pt-2 border-r border-b relative overflow-y-scroll', {'bg-gray-200': highlight})}>
@@ -13,10 +16,21 @@ const Day = ({number, highlight, current, today, reminders, onClick }) => {
         {number}
       </button>
       <div style={{height: "80px"}} className="overflow-y-auto mt-1">
-        {reminders.map(({description, time, color}) => (
-          <div className="mt-1 overflow-hidden, inline-flex items-center">
-            <div style={{width: '10px', height: '10px', backgroundColor: color}} className="rounded mr-1" />
-            <p className="truncate w-20" style={{fontSize: '0.7em'}}>{description}</p><span className="ml-1 text-gray-600 font-normal" style={{fontSize: '0.3em'}}>{time}</span>
+        {reminders?.map(reminder => (
+          <div className="mt-1 overflow-hidden, inline-flex items-center" key={reminder.id}>
+            <div style={{width: '10px', height: '10px', backgroundColor: reminder.color}} className="rounded mr-1" />
+            <p className="truncate w-20" style={{fontSize: '0.7em'}}>
+              <button onClick={() => {
+                dispatch({
+                  type: actions.LOAD_REMINDER,
+                  payload: reminder
+                })
+                showModal(true)
+              }}>
+                {reminder.description}
+              </button>
+            </p>
+            <span className="ml-1 text-gray-600 font-normal" style={{fontSize: '0.3em'}}>{reminder.time}</span>
           </div>
         ))}
       </div>
@@ -30,6 +44,7 @@ Day.propTypes = {
   current: PropTypes.bool,
   today: PropTypes.bool,
   reminders: PropTypes.array,
+  showModal: PropTypes.func,
   onClick: PropTypes.func,
 }
 

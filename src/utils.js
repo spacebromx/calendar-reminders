@@ -79,3 +79,7 @@ export const getRemindersByDate = (reminders, date) => {
   let newDate = parseAndFormatDate(date)
   return reminders.filter(reminder => reminder.date === newDate)
 }
+
+export const getReminderById = (reminders, id) => {
+  return reminders.filter(reminder => reminder.id === id)
+}

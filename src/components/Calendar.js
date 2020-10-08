@@ -13,8 +13,6 @@ const Calendar = () => {
   const days = generateCalendar({month, year})
   const [showModal, setShowModal] = useState(false)
 
-  console.log(reminders)
-
   function isToday(date) {
     let today = new Date()
     let newDate = new Date(Date.parse(date))
@@ -32,12 +30,13 @@ const Calendar = () => {
   return (
     <>
       {showModal && <Overlay>
-        <Modal onClose={() => setShowModal(false)}/>
+        <Modal onClose={() => {
+          setShowModal(false)
+        }}/>
       </Overlay>}
       <Navigation/>
       <div className="-mx-1 -mb-1">
         <Header/>
-
         <div className="flex flex-wrap border-t border-l">
           {days.map(({date, period}, i) => (
             <Day
@@ -47,6 +46,7 @@ const Calendar = () => {
               current={period === TIME_FRAMES.CURRENT}
               today={isToday(date)}
               reminders={getRemindersByDate(reminders, date)}
+              showModal={setShowModal}
               onClick={() => {
                 dispatch({
                   type: actions.CREATE_REMINDER,

@@ -10,7 +10,8 @@ import {actions} from "../constants";
 
 const Modal = ({onClose}) => {
   const [showColorPicker, setShowColorPicker] = useState(false)
-  const {state: {reminderData: {date}}, dispatch} = useContext(GlobalContext)
+  const {state: {reminderData: {date}, currentReminder}, dispatch} = useContext(GlobalContext)
+  const isEdit = !!currentReminder
   const initialValues = {
     description: '',
     date: parseAndFormatDate(date),
@@ -22,12 +23,11 @@ const Modal = ({onClose}) => {
   return (
     <div className="fixed z-10 inset-0 overflow-y-auto">
       <Formik
-        initialValues={initialValues}
+        initialValues={isEdit ? currentReminder : initialValues}
         validationSchema={ReminderSchema}
         onSubmit={values => {
-          // same shape as initial values
           dispatch({
-            type: actions.SAVE_REMINDER,
+            type: isEdit ? actions.EDIT_REMINDER : actions.SAVE_REMINDER,
             payload: values
           })
           onClose()
@@ -50,13 +50,16 @@ const Modal = ({onClose}) => {
                       <div className="flex flex-row">
                         <div className="flex-1">
                           <h2 className="font-bold text-2xl mb-6 text-gray-800 border-b pb-2">
-                            Create a Reminder
+                            {isEdit ? "Edit" : "Create"} a Reminder
                           </h2>
                         </div>
                         <div className="inline-flex flex-col items-center">
                           <span className="text-center ml-1 text-xs text-gray-600 font-normal italic">Pick Color</span>
                           <button
-                            onClick={() => setShowColorPicker(true)}
+                            onClick={(event) => {
+                              event.preventDefault()
+                              setShowColorPicker(true)
+                            }}
                             className="rounded-b"
                             style={{backgroundColor: values.color, height: '30px', width: '30px', cursor: 'pointer'}}/>
                           {showColorPicker && <GithubPicker
@@ -115,11 +118,16 @@ const Modal = ({onClose}) => {
 <span className="flex w-full rounded-md shadow-sm sm:ml-3 sm:w-auto">
 <button type="submit"
         className="inline-flex justify-center w-full rounded-md border border-transparent px-4 py-2 bg-blue-600 text-base leading-6 font-medium text-white shadow-sm hover:bg-red-500 focus:outline-none focus:border-red-700 focus:shadow-outline-red transition ease-in-out duration-150 sm:text-sm sm:leading-5">
-Create
+{isEdit ? "Edit" : "Create"}
 </button>
 </span><span className="mt-3 flex w-full rounded-md shadow-sm sm:mt-0 sm:w-auto">
 <button
-  onClick={onClose}
+  onClick={() => {
+    isEdit && dispatch({
+      type: actions.CLEAN_CURRENT_REMINDER
+    })
+    onClose()
+  }}
   type="button"
   className="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-base leading-6 font-medium text-gray-700 shadow-sm hover:text-gray-500 focus:outline-none focus:border-blue-300 focus:shadow-outline-blue transition ease-in-out duration-150 sm:text-sm sm:leading-5">
 Cancel
