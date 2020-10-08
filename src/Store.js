@@ -8,10 +8,17 @@ const initialState = {
   month: now.getMonth(),
   year: now.getFullYear(),
   reminderData: {
-    day: 0,
-    month: 0,
-    year: ''
-  }
+    date: new Date()
+  },
+  reminders: [
+    {
+      city: "",
+      color: "#e53e3e",
+      date: "Oct 7, 2020",
+      description: "1",
+      time: "1:00 PM"
+    }
+  ]
 }
 
 export const GlobalContext = createContext()
@@ -22,8 +29,10 @@ const reducer = (state, action) => {
       const {month, year, day = 1} = action.payload
       return {...state, year, month, day}
     case actions.CREATE_REMINDER:
-      const {newMonth, newYear, newDay } = action.payload
-      return {...state, reminderData: {...state.reminderData, day: newDay, month: newMonth, year: newYear}}
+      const {date} = action.payload
+      return {...state, reminderData: {...state.reminderData, date}}
+    case actions.SAVE_REMINDER:
+      return {...state, reminders: [...state.reminders, {...action.payload}]}
     default:
       return state
   }

@@ -20,7 +20,7 @@ const Day = ({number, highlight, current, today, onClick }) => {
 };
 
 Day.propTypes = {
-  number: PropTypes.number.isRequired,
+  number: PropTypes.string.isRequired,
   highlight: PropTypes.bool,
   current: PropTypes.bool,
   today: PropTypes.bool,

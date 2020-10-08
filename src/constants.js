@@ -1,7 +1,8 @@
 export const WEEKDAYS = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday']
 export const actions = {
   UPDATE_DATE: 'UPDATE_DATE',
-  CREATE_REMINDER: 'CREATE_REMINDER'
+  CREATE_REMINDER: 'CREATE_REMINDER',
+  SAVE_REMINDER: 'SAVE_REMINDER'
 }
 
 export const TIME_TRAVEL_DIRECTIONS = {

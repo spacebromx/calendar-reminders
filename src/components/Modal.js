@@ -2,18 +2,18 @@ import React, {useState, useContext} from 'react';
 import PropTypes from 'prop-types'
 import {GlobalContext} from "../Store";
 import {GithubPicker} from 'react-color'
-import {Formik, Form, Field} from "formik";
-import {getStringDate} from "../utils";
+import {Formik, Form} from "formik";
+import {parseAndFormatDate} from "../utils";
 import ValidatedField from "./ValidatedField";
 import ReminderSchema from "../ReminderSchema";
+import {actions} from "../constants";
 
 const Modal = ({onClose}) => {
   const [showColorPicker, setShowColorPicker] = useState(false)
-  const {state: {reminderData: {day, month, year}}, dispatch} = useContext(GlobalContext)
-  const formattedDate = getStringDate({year, month, day})
+  const {state: {reminderData: {date}}, dispatch} = useContext(GlobalContext)
   const initialValues = {
     description: '',
-    date: formattedDate,
+    date: parseAndFormatDate(date),
     time: '1:00 PM',
     city: '',
     color: '#e53e3e'
@@ -26,7 +26,11 @@ const Modal = ({onClose}) => {
         validationSchema={ReminderSchema}
         onSubmit={values => {
           // same shape as initial values
-          console.log(values);
+          dispatch({
+            type: actions.SAVE_REMINDER,
+            payload: values
+          })
+          onClose()
         }}
 
       >

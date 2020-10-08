@@ -19,12 +19,16 @@ export const generateCalendar = ({month, year}) => {
   for (let i = 0; i < days.length; i++) {
     if (i >= startingDay) {
       if (j <= numberOfDaysInMonth) {
-        // current month
-        days[i] = formatDate(new Date(year, month, j))
+        days[i] = {
+          date: formatDate(new Date(year, month, j)),
+          period: TIME_FRAMES.CURRENT
+        }
         j++
       } else {
-        // next month
-        days[i] = formatDate(new Date(year, month + 1, k))
+        days[i] = {
+          date: formatDate(new Date(year, month + 1, k)),
+          period: TIME_FRAMES.LATER
+        }
         k++
       }
     } else {
@@ -36,10 +40,12 @@ export const generateCalendar = ({month, year}) => {
   const complement = [...Array(numberOfDaysInPrevMonth + 1).keys()].splice(-l)
 
   for (let i = 0; i < l; i++) {
-    days[i] = formatDate(new Date(year, month - 1, complement[i]))
+    days[i] = {
+      date: formatDate(new Date(year, month - 1, complement[i])),
+      period: TIME_FRAMES.PRIOR
+    }
   }
 
-  console.log(days)
   return days
 }
 
@@ -60,10 +66,10 @@ export const getStringDate = ({year, month, day}) => {
 
 export const formatDate = date => date.toLocaleString('en')
 
-export const parseAndFormatDate = date => {
+export const parseAndFormatDate = (date, options = DATE_FORMAT_OPTIONS) => {
   try {
     const dateParsed = Date.parse(date)
-    return new Date(dateParsed).toLocaleString('en', DATE_FORMAT_OPTIONS)
+    return new Date(dateParsed).toLocaleString('en', options)
   } catch (e) {
     throw new Error('invalid date format')
   }
